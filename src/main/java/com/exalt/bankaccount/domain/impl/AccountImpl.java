@@ -17,7 +17,7 @@ public class AccountImpl implements Account {
 
     @Override
     public void withdraw(double amount) throws NegativeBalanceException {
-        if(this.balance < 0)
+        if(this.balance <= 0)
             throw new NegativeBalanceException("Can't withdraw from account, balance is negative");
         this.balance-=amount;
     }

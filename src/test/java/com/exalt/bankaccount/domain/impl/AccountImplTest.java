@@ -1,5 +1,6 @@
 package com.exalt.bankaccount.domain.impl;
 
+import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AccountImplTest {
     AccountImpl account;
-    static final double BALANCE_VALUE = 10;
+    static final double BALANCE_VALUE = 1000;
 
     @BeforeEach
     void setUp() {
@@ -26,9 +27,16 @@ class AccountImplTest {
 
     @ParameterizedTest
     @ValueSource(doubles = {1, 30, 600, 56, 765})
-    void withdraw(double amount) {
+    void withdraw(double amount) throws NegativeBalanceException {
         account.withdraw(amount);
         assertEquals(BALANCE_VALUE - amount, account.getBalance());
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {1, 30, 600, 56, 765})
+    void withdrawFromNegativeAccount(double amount) throws NegativeBalanceException {
+        account.withdraw(BALANCE_VALUE);
+        assertThrows(NegativeBalanceException.class, () -> account.withdraw(amount));
     }
 
     @Test
