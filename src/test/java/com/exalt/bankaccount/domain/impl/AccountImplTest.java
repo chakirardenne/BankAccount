@@ -15,10 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class AccountImplTest {
     AccountImpl account;
     static final double BALANCE_VALUE = 1000;
+    static final String ACCOUNT_NAME = "Name";
 
     @BeforeEach
     void setUp() {
-        account = new AccountImpl(BALANCE_VALUE);
+        account = new AccountImpl(BALANCE_VALUE, ACCOUNT_NAME);
     }
 
     @ParameterizedTest
@@ -59,5 +60,10 @@ class AccountImplTest {
         account.withdraw(5);
         List<Transaction> transactions = account.getTransactionHitory();
         assertEquals(transactions, account.getTransactionHitory());
+    }
+
+    @Test
+    void getName() {
+        assertEquals(ACCOUNT_NAME, account.getName());
     }
 }
