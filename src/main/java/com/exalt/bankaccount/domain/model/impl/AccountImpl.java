@@ -25,7 +25,7 @@ public class AccountImpl implements Account {
     @Override
     public void deposit(double amount) {
         this.balance+=amount;
-        this.transactions.add(new TransactionImpl(TransactionType.DEPOSIT, amount, Date.from(Instant.now()), this.getBalance()));
+        this.transactions.add(new TransactionImpl(id, TransactionType.DEPOSIT, amount, Date.from(Instant.now()), this.getBalance()));
     }
 
     @Override
@@ -33,7 +33,7 @@ public class AccountImpl implements Account {
         if(this.balance <= 0)
             throw new NegativeBalanceException("Can't withdraw from account, balance is negative");
         this.balance-=amount;
-        this.transactions.add(new TransactionImpl(TransactionType.WITHDRAW, amount, Date.from(Instant.now()), this.getBalance()));
+        this.transactions.add(new TransactionImpl(id, TransactionType.WITHDRAW, amount, Date.from(Instant.now()), this.getBalance()));
     }
 
     @Override
