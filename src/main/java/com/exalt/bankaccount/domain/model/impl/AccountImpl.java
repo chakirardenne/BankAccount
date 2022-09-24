@@ -1,8 +1,8 @@
-package com.exalt.bankaccount.domain.impl;
+package com.exalt.bankaccount.domain.model.impl;
 
-import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
-import com.exalt.bankaccount.domain.intf.Account;
-import com.exalt.bankaccount.domain.intf.Transaction;
+import com.exalt.bankaccount.domain.model.exception.NegativeBalanceException;
+import com.exalt.bankaccount.domain.model.intf.Account;
+import com.exalt.bankaccount.domain.model.intf.Transaction;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -10,11 +10,13 @@ import java.util.Date;
 import java.util.List;
 
 public class AccountImpl implements Account {
+    private final Long id;
     private double balance;
     private final String name;
     private final List<Transaction> transactions;
 
-    public AccountImpl(double balance, String name) {
+    public AccountImpl(Long id, double balance, String name) {
+        this.id = id;
         this.balance = balance;
         this.name = name;
         this.transactions = new ArrayList<>();

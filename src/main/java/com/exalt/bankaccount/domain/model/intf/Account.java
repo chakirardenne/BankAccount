@@ -1,6 +1,6 @@
-package com.exalt.bankaccount.domain.intf;
+package com.exalt.bankaccount.domain.model.intf;
 
-import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
+import com.exalt.bankaccount.domain.model.exception.NegativeBalanceException;
 
 import java.util.List;
 

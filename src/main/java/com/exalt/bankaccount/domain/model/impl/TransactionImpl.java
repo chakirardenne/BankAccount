@@ -1,6 +1,6 @@
-package com.exalt.bankaccount.domain.impl;
+package com.exalt.bankaccount.domain.model.impl;
 
-import com.exalt.bankaccount.domain.intf.Transaction;
+import com.exalt.bankaccount.domain.model.intf.Transaction;
 
 import java.util.Date;
 

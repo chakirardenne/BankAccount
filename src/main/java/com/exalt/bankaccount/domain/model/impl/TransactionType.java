@@ -1,4 +1,4 @@
-package com.exalt.bankaccount.domain.impl;
+package com.exalt.bankaccount.domain.model.impl;
 
 public enum TransactionType {
     DEPOSIT("Deposit"),WITHDRAW("Withdraw");

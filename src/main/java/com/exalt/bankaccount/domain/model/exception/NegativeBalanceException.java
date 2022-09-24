@@ -1,4 +1,4 @@
-package com.exalt.bankaccount.domain.exception;
+package com.exalt.bankaccount.domain.model.exception;
 
 public class NegativeBalanceException extends Exception {
     public NegativeBalanceException(String s) {
