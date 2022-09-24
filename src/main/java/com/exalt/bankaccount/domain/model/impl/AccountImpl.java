@@ -50,4 +50,8 @@ public class AccountImpl implements Account {
     public List<Transaction> getTransactionHitory() {
         return transactions;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

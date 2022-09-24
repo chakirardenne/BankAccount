@@ -9,5 +9,6 @@ public interface Account {
     void withdraw(double amount) throws NegativeBalanceException;
     double getBalance();
     String getName();
+    Long getId();
     List<Transaction> getTransactionHitory();
 }
