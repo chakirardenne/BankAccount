@@ -11,10 +11,12 @@ import java.util.List;
 
 public class AccountImpl implements Account {
     private double balance;
+    private final String name;
     private final List<Transaction> transactions;
 
-    public AccountImpl(double balance) {
+    public AccountImpl(double balance, String name) {
         this.balance = balance;
+        this.name = name;
         this.transactions = new ArrayList<>();
     }
 
@@ -34,11 +36,16 @@ public class AccountImpl implements Account {
 
     @Override
     public double getBalance() {
-        return this.balance;
+        return balance;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
     public List<Transaction> getTransactionHitory() {
-        return this.transactions;
+        return transactions;
     }
 }

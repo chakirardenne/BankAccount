@@ -8,5 +8,6 @@ public interface Account {
     void deposit(double amount);
     void withdraw(double amount) throws NegativeBalanceException;
     double getBalance();
+    String getName();
     List<Transaction> getTransactionHitory();
 }
