@@ -1,7 +1,8 @@
 package com.exalt.bankaccount.domain.impl;
 
-import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
-import com.exalt.bankaccount.domain.intf.Transaction;
+import com.exalt.bankaccount.domain.model.exception.NegativeBalanceException;
+import com.exalt.bankaccount.domain.model.impl.AccountImpl;
+import com.exalt.bankaccount.domain.model.intf.Transaction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,10 +17,11 @@ class AccountImplTest {
     AccountImpl account;
     static final double BALANCE_VALUE = 1000;
     static final String ACCOUNT_NAME = "Name";
+    static final Long ACCOUNT_ID = 1L;
 
     @BeforeEach
     void setUp() {
-        account = new AccountImpl(BALANCE_VALUE, ACCOUNT_NAME);
+        account = new AccountImpl(ACCOUNT_ID, BALANCE_VALUE, ACCOUNT_NAME);
     }
 
     @ParameterizedTest
