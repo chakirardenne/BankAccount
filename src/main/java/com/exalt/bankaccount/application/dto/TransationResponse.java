@@ -1,4 +1,4 @@
-package com.exalt.bankaccount.application.adapters.dto;
+package com.exalt.bankaccount.application.dto;
 
 import com.exalt.bankaccount.domain.model.intf.Transaction;
 import lombok.NoArgsConstructor;

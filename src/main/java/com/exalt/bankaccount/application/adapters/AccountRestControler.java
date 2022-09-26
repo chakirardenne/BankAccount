@@ -1,8 +1,8 @@
 package com.exalt.bankaccount.application.adapters;
 
-import com.exalt.bankaccount.application.adapters.dto.DepositRequest;
-import com.exalt.bankaccount.application.adapters.dto.TransationResponse;
-import com.exalt.bankaccount.application.adapters.dto.WithdrawRequest;
+import com.exalt.bankaccount.application.dto.DepositRequest;
+import com.exalt.bankaccount.application.dto.TransationResponse;
+import com.exalt.bankaccount.application.dto.WithdrawRequest;
 import com.exalt.bankaccount.domain.service.BankAccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

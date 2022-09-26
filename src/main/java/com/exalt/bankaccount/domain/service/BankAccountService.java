@@ -4,9 +4,9 @@ import com.exalt.bankaccount.domain.model.exception.NegativeBalanceException;
 import com.exalt.bankaccount.domain.model.intf.Account;
 import com.exalt.bankaccount.domain.model.intf.Transaction;
 import com.exalt.bankaccount.domain.ports.AccountRepository;
-import com.exalt.bankaccount.domain.usecase.DepositUseCase;
-import com.exalt.bankaccount.domain.usecase.HistoryUseCase;
-import com.exalt.bankaccount.domain.usecase.WithdrawUseCase;
+import com.exalt.bankaccount.domain.ports.usecase.DepositUseCase;
+import com.exalt.bankaccount.domain.ports.usecase.HistoryUseCase;
+import com.exalt.bankaccount.domain.ports.usecase.WithdrawUseCase;
 
 import java.util.List;
 import java.util.NoSuchElementException;

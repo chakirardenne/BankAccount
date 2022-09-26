@@ -1,11 +1,12 @@
-package com.exalt.bankaccount.application.adapters.dto;
+package com.exalt.bankaccount.application.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class WithdrawRequest {
+public class DepositRequest {
     public Long id;
     public double amount;
+
 }

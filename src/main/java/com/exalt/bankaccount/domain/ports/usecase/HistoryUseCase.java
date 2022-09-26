@@ -1,4 +1,4 @@
-package com.exalt.bankaccount.domain.usecase;
+package com.exalt.bankaccount.domain.ports.usecase;
 
 import com.exalt.bankaccount.domain.model.intf.Transaction;
 

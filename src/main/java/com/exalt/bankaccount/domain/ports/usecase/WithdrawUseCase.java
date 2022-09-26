@@ -1,4 +1,4 @@
-package com.exalt.bankaccount.domain.usecase;
+package com.exalt.bankaccount.domain.ports.usecase;
 
 public interface WithdrawUseCase {
     void withdraw(Long id, double amount);
