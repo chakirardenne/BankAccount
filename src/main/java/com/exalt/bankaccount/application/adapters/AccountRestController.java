@@ -11,10 +11,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
-public class AccountRestControler {
+public class AccountRestController {
     private final BankAccountService bankAccountService;
 
-    public AccountRestControler(BankAccountService bankAccountService) {
+    public AccountRestController(BankAccountService bankAccountService) {
         this.bankAccountService = bankAccountService;
     }
 
