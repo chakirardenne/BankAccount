@@ -1,8 +1,7 @@
 package com.exalt.bankaccount.domain.impl;
 
-import com.exalt.bankaccount.domain.model.exception.NegativeBalanceException;
-import com.exalt.bankaccount.domain.model.impl.AccountImpl;
-import com.exalt.bankaccount.domain.model.intf.Transaction;
+import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
+import com.exalt.bankaccount.domain.intf.Transaction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AccountImplTest {
     AccountImpl account;

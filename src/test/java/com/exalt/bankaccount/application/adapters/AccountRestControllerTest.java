@@ -9,8 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest
@@ -30,7 +32,7 @@ class AccountRestControllerTest {
 
     @Test
     void deposit() throws Exception {
-        mvc.perform(get("/accounts/deposit")
+        mvc.perform(post("/accounts/deposit")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
@@ -38,7 +40,7 @@ class AccountRestControllerTest {
 
     @Test
     void withdraw() throws Exception {
-        mvc.perform(get("/accounts/withdraw")
+        mvc.perform(post("/accounts/withdraw")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
@@ -46,7 +48,7 @@ class AccountRestControllerTest {
 
     @Test
     void getHistory() throws Exception {
-        mvc.perform(get("/accounts/{id}/history")
+        mvc.perform(get("/accounts/1/history")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
