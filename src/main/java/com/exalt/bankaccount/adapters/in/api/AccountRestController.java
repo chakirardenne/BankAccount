@@ -6,6 +6,7 @@ import com.exalt.bankaccount.adapters.in.dto.WithdrawRequest;
 import com.exalt.bankaccount.application.ports.in.DepositUseCase;
 import com.exalt.bankaccount.application.ports.in.HistoryUseCase;
 import com.exalt.bankaccount.application.ports.in.WithdrawUseCase;
+import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,12 @@ public class AccountRestController {
     @PostMapping(value = "/withdraw")
     @ResponseStatus(HttpStatus.OK)
     public void withdraw(@RequestBody WithdrawRequest withdrawRequest) {
-        withdrawService.withdraw(withdrawRequest.id, withdrawRequest.amount);
+        try {
+            withdrawService.withdraw(withdrawRequest.id, withdrawRequest.amount);
+        }
+        catch (NegativeBalanceException exception) {
+            throw new RuntimeException(exception.getMessage());
+        }
     }
 
     @GetMapping(value = "/{id}/history")

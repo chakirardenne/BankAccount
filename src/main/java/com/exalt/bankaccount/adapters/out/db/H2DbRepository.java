@@ -7,9 +7,9 @@ import com.exalt.bankaccount.domain.intf.Account;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-public class MySQLDbRepository implements AccountRepository {
+public class H2DbRepository implements AccountRepository {
     private final SpringDataJpaRepository repository;
-    public MySQLDbRepository(SpringDataJpaRepository repository) {
+    public H2DbRepository(SpringDataJpaRepository repository) {
         this.repository = repository;
     }
     @Override
