@@ -8,6 +8,7 @@ import com.exalt.bankaccount.application.ports.out.AccountRepository;
 import com.exalt.bankaccount.application.service.DepositService;
 import com.exalt.bankaccount.application.service.HistoryService;
 import com.exalt.bankaccount.application.service.WithdrawService;
+import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
 import com.exalt.bankaccount.domain.impl.AccountImpl;
 import com.exalt.bankaccount.domain.intf.Account;
 import com.exalt.bankaccount.domain.intf.Transaction;
@@ -18,11 +19,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+
 @WebMvcTest(controllers = AccountRestController.class)
 class BankAccountServiceTest {
     @MockBean
@@ -53,24 +55,26 @@ class BankAccountServiceTest {
     @Test
     void shouldDepositOnAccountThenSaveIt() {
         final Account account = new AccountImpl(1L, BALANCE_VALUE, "accountName");
-        depositService.deposit(account.getId(), 10);
+        when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
+        depositService.deposit(1L, 10);
         verify(accountRepository).save(any(Account.class));
     }
 
     @Test
-    void shouldWithDrawOnAccountThenSaveIt() {
+    void shouldWithDrawOnAccountThenSaveIt() throws NegativeBalanceException {
         final Account account = new AccountImpl(1L, BALANCE_VALUE, "accountName");
+        when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
         withdrawService.withdraw(account.getId(), 10);
         verify(accountRepository).save(any(Account.class));
     }
 
     @Test
-    void shouldReturnHistoryForAccount() {
+    void shouldReturnHistoryForAccount() throws NegativeBalanceException {
         final Account account = new AccountImpl(1L, BALANCE_VALUE, "accountName");
-        accountRepository.save(account);
+        when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
         historyService.getHistoryForAccount(account.getId());
-        depositService.deposit(account.getId(), 200);
-        withdrawService.withdraw(account.getId(), 59);
+        depositService.deposit(1L, 200);
+        withdrawService.withdraw(1L, 59);
         List<Transaction> transactions = historyService.getHistoryForAccount(account.getId());
         assertEquals(2, transactions.size());
     }
