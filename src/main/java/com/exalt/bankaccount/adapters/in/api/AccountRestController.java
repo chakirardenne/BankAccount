@@ -31,13 +31,13 @@ public class AccountRestController {
 
 
     @PostMapping(value = "/deposit")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deposit(@RequestBody DepositRequest depositRequest) {
         depositService.deposit(depositRequest.id, depositRequest.amount);
     }
 
     @PostMapping(value = "/withdraw")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void withdraw(@RequestBody WithdrawRequest withdrawRequest) {
         try {
             withdrawService.withdraw(withdrawRequest.id, withdrawRequest.amount);

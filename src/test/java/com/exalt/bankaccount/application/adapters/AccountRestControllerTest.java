@@ -2,6 +2,7 @@ package com.exalt.bankaccount.application.adapters;
 
 import com.exalt.bankaccount.adapters.in.api.AccountRestController;
 import com.exalt.bankaccount.adapters.in.dto.DepositRequest;
+import com.exalt.bankaccount.adapters.in.dto.WithdrawRequest;
 import com.exalt.bankaccount.application.ports.in.DepositUseCase;
 import com.exalt.bankaccount.application.ports.in.HistoryUseCase;
 import com.exalt.bankaccount.application.ports.in.WithdrawUseCase;
@@ -57,16 +58,19 @@ class AccountRestControllerTest {
         mvc.perform(post("/accounts/deposit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(depositRequest)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+                .andExpect(status().isNoContent());
     }
 
     @Test
     void withdraw() throws Exception {
+        WithdrawRequest withdrawRequest = new WithdrawRequest();
+        withdrawRequest.setId(1L);
+        withdrawRequest.setAmount(100);
+
         mvc.perform(post("/accounts/withdraw")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(withdrawRequest)))
+                .andExpect(status().isNoContent());
     }
 
     @Test
