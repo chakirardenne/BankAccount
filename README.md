@@ -19,3 +19,7 @@ Contient les adapters in et out de persistence et exposition d'une api
 ### Application
 Contient les ports in et out du domain, les use case du domain et le port de persistence
 
+
+Commande pour lancer l'application:
+- build: ./gradlew build
+- lancer: /gradlew bootRun
