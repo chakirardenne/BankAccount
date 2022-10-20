@@ -1,10 +1,12 @@
 package com.exalt.bankaccount.domain.service;
 
 import com.exalt.bankaccount.adapters.in.api.AccountRestController;
+import com.exalt.bankaccount.application.ports.in.CreateAccountUseCase;
 import com.exalt.bankaccount.application.ports.in.DepositUseCase;
 import com.exalt.bankaccount.application.ports.in.HistoryUseCase;
 import com.exalt.bankaccount.application.ports.in.WithdrawUseCase;
 import com.exalt.bankaccount.application.ports.out.AccountRepository;
+import com.exalt.bankaccount.application.service.CreateAccountService;
 import com.exalt.bankaccount.application.service.DepositService;
 import com.exalt.bankaccount.application.service.HistoryService;
 import com.exalt.bankaccount.application.service.WithdrawService;
@@ -36,6 +38,8 @@ class BankAccountServiceTest {
     private DepositUseCase depositService;
     @MockBean
     private WithdrawUseCase withdrawService;
+    @MockBean
+    private CreateAccountUseCase createService;
     static final double BALANCE_VALUE = 1000;
 
     @BeforeEach
@@ -44,6 +48,7 @@ class BankAccountServiceTest {
         historyService = new HistoryService(accountRepository);
         depositService = new DepositService(accountRepository);
         withdrawService = new WithdrawService(accountRepository);
+        createService = new CreateAccountService(accountRepository);
     }
 
     @AfterEach
@@ -72,6 +77,7 @@ class BankAccountServiceTest {
     void shouldReturnHistoryForAccount() throws NegativeBalanceException {
         final Account account = new AccountImpl(1L, BALANCE_VALUE, "accountName");
         when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
+        when(accountRepository.getHistory(account)).thenReturn(account.getTransactionHistory());
         historyService.getHistoryForAccount(account.getId());
         depositService.deposit(1L, 200);
         withdrawService.withdraw(1L, 59);
