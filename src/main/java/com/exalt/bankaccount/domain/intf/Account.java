@@ -10,5 +10,5 @@ public interface Account {
     double getBalance();
     String getName();
     Long getId();
-    List<Transaction> getTransactionHitory();
+    List<Transaction> getTransactionHistory();
 }

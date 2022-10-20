@@ -6,8 +6,7 @@ import com.exalt.bankaccount.adapters.in.dto.WithdrawRequest;
 import com.exalt.bankaccount.application.ports.in.DepositUseCase;
 import com.exalt.bankaccount.application.ports.in.HistoryUseCase;
 import com.exalt.bankaccount.application.ports.in.WithdrawUseCase;
-import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
-import org.springframework.beans.factory.annotation.Qualifier;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,36 +14,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
+@RequiredArgsConstructor
 public class AccountRestController {
-    @Qualifier("HistoryUseCase")
     private final HistoryUseCase historyService;
-    @Qualifier("WithdrawUseCase")
     private final WithdrawUseCase withdrawService;
-    @Qualifier("DepositUseCase")
     private final DepositUseCase depositService;
-
-    public AccountRestController(HistoryUseCase historyService, WithdrawUseCase withdrawService, DepositUseCase depositService) {
-        this.historyService = historyService;
-        this.withdrawService = withdrawService;
-        this.depositService = depositService;
-    }
-
 
     @PostMapping(value = "/deposit")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deposit(@RequestBody DepositRequest depositRequest) {
-        depositService.deposit(depositRequest.id, depositRequest.amount);
+        depositService.deposit(depositRequest.getId(), depositRequest.getAmount());
     }
 
     @PostMapping(value = "/withdraw")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void withdraw(@RequestBody WithdrawRequest withdrawRequest) {
-        try {
-            withdrawService.withdraw(withdrawRequest.id, withdrawRequest.amount);
-        }
-        catch (NegativeBalanceException exception) {
-            throw new RuntimeException(exception.getMessage());
-        }
+        withdrawService.withdraw(withdrawRequest.getId(), withdrawRequest.getAmount());
     }
 
     @GetMapping(value = "/{id}/history")

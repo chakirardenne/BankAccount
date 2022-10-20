@@ -47,7 +47,7 @@ public class AccountImpl implements Account {
     }
 
     @Override
-    public List<Transaction> getTransactionHitory() {
+    public List<Transaction> getTransactionHistory() {
         return transactions;
     }
 

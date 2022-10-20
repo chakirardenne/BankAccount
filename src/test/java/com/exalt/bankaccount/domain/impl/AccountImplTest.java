@@ -33,14 +33,14 @@ class AccountImplTest {
 
     @ParameterizedTest
     @ValueSource(doubles = {1, 30, 600, 56, 765})
-    void withdraw(double amount) throws NegativeBalanceException {
+    void withdraw(double amount) {
         account.withdraw(amount);
         assertEquals(BALANCE_VALUE - amount, account.getBalance());
     }
 
     @ParameterizedTest
     @ValueSource(doubles = {1, 30, 600, 56, 765})
-    void withdrawFromNegativeAccount(double amount) throws NegativeBalanceException {
+    void withdrawFromNegativeAccount(double amount) {
         account.withdraw(BALANCE_VALUE);
         assertThrows(NegativeBalanceException.class, () -> account.withdraw(amount));
     }
@@ -57,11 +57,11 @@ class AccountImplTest {
     }
 
     @Test
-    void getTransactionHitory() throws NegativeBalanceException {
+    void getTransactionHistory() {
         account.deposit(10);
         account.withdraw(5);
-        List<Transaction> transactions = account.getTransactionHitory();
-        assertEquals(transactions, account.getTransactionHitory());
+        List<Transaction> transactions = account.getTransactionHistory();
+        assertEquals(transactions, account.getTransactionHistory());
     }
 
     @Test

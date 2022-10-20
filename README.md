@@ -22,4 +22,4 @@ Contient les ports in et out du domain, les use case du domain et le port de per
 
 Commande pour lancer l'application:
 - build: ./gradlew build
-- lancer: /gradlew bootRun
+- lancer: ./gradlew bootRun

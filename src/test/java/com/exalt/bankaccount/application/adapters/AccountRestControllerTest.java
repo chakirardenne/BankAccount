@@ -42,7 +42,6 @@ class AccountRestControllerTest {
 
     @BeforeEach
     void setUp() {
-//        Account account = new AccountImpl(1L, 10, "account_1");
     }
 
     @AfterEach
