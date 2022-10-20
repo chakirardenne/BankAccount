@@ -5,14 +5,14 @@ import com.exalt.bankaccount.application.ports.out.AccountRepository;
 import com.exalt.bankaccount.domain.intf.Account;
 import com.exalt.bankaccount.domain.intf.Transaction;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@Component(value = "HistoryUseCase")
 @RequiredArgsConstructor
+@Service
 public class HistoryService implements HistoryUseCase {
     private final AccountRepository accountRepository;
     @Override
@@ -20,6 +20,6 @@ public class HistoryService implements HistoryUseCase {
     public List<Transaction> getHistoryForAccount(Long id) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
-        return account.getTransactionHistory();
+        return accountRepository.getHistory(account);
     }
 }

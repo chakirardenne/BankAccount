@@ -15,11 +15,12 @@ import java.util.List;
 @NoArgsConstructor
 public class AccountEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double balance;
     private String name;
-    @OneToMany
+    @OneToMany(orphanRemoval=true, fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name = "account_id")
     private List<TransactionEntity> transactions;
 
     public static Account toDomain(AccountEntity account) {

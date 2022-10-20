@@ -4,6 +4,7 @@ import com.exalt.bankaccount.domain.impl.TransactionImpl;
 import com.exalt.bankaccount.domain.impl.TransactionType;
 import com.exalt.bankaccount.domain.intf.Transaction;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,17 +18,19 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class TransactionEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
     private double amount;
     private Date date;
     private double balance;
 
-    public Transaction toDomain(TransactionEntity transactionEntity) {
-        return new TransactionImpl(id, TransactionType.valueOf(transactionEntity.getType()),
+    public static Transaction toDomain(TransactionEntity transactionEntity) {
+        return new TransactionImpl(transactionEntity.getId(),
+                TransactionType.valueOf(transactionEntity.getType()),
                 transactionEntity.getAmount(),
                 transactionEntity.getDate(),
                 transactionEntity.getBalance()
@@ -35,11 +38,12 @@ public class TransactionEntity {
     }
 
     public static TransactionEntity toEntity(Transaction transaction) {
-        return new TransactionEntity(transaction.getId(), transaction.getTransactionType().getType(),
-                transaction.getAmount(),
-                transaction.getDate(),
-                transaction.getBalance()
-        );
+        return TransactionEntity.builder()
+                .id(transaction.getId())
+                .amount(transaction.getAmount())
+                .type(transaction.getTransactionType().getType())
+                .date(transaction.getDate())
+                .balance(transaction.getBalance())
+                .build();
     }
-
 }
