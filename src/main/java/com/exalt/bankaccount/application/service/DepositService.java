@@ -4,12 +4,12 @@ import com.exalt.bankaccount.application.ports.in.DepositUseCase;
 import com.exalt.bankaccount.application.ports.out.AccountRepository;
 import com.exalt.bankaccount.domain.intf.Account;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
-@Component(value = "DepositUseCase")
+@Service
 @RequiredArgsConstructor
 public class DepositService implements DepositUseCase {
     private final AccountRepository accountRepository;
