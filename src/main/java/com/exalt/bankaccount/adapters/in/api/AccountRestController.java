@@ -1,8 +1,7 @@
 package com.exalt.bankaccount.adapters.in.api;
 
-import com.exalt.bankaccount.adapters.in.dto.DepositRequest;
-import com.exalt.bankaccount.adapters.in.dto.TransactionResponse;
-import com.exalt.bankaccount.adapters.in.dto.WithdrawRequest;
+import com.exalt.bankaccount.adapters.in.dto.*;
+import com.exalt.bankaccount.application.ports.in.CreateAccountUseCase;
 import com.exalt.bankaccount.application.ports.in.DepositUseCase;
 import com.exalt.bankaccount.application.ports.in.HistoryUseCase;
 import com.exalt.bankaccount.application.ports.in.WithdrawUseCase;
@@ -19,6 +18,13 @@ public class AccountRestController {
     private final HistoryUseCase historyService;
     private final WithdrawUseCase withdrawService;
     private final DepositUseCase depositService;
+    private final CreateAccountUseCase createService;
+
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public CreateAccountResponse create(@RequestBody CreateAccountRequest createAccountRequest) {
+        return createService.create(createAccountRequest);
+    }
 
     @PostMapping(value = "/deposit")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -35,7 +41,7 @@ public class AccountRestController {
     @GetMapping(value = "/{id}/history")
     @ResponseStatus(HttpStatus.OK)
     public List<TransactionResponse> getHistory(@PathVariable("id") Long id) {
-        return historyService.getHistoryForAccount(id).stream()
+        return  historyService.getHistoryForAccount(id).stream()
                 .map(TransactionResponse::of)
                 .toList();
     }
