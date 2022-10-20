@@ -7,9 +7,10 @@ Implémentation de l'architecture hexagonal en Java avec le framework Spring Boo
 
 ### Domain
 Le package domain contient la logique métier de l'application : 
-- Compte banquaire
+- Créer un compte
 - Débiter un compte
-- Créditer un compte 
+- Créditer un compte
+- Consulter l'historique d'un compte
 
 ### Adapters
 Contient les adapters in et out de persistence et exposition d'une api
@@ -19,7 +20,9 @@ Contient les adapters in et out de persistence et exposition d'une api
 ### Application
 Contient les ports in et out du domain, les use case du domain et le port de persistence
 
-
 Commande pour lancer l'application:
 - build: ./gradlew build
 - lancer: ./gradlew bootRun
+
+### Documentation
+Accéder à la documentation de l'api : http://localhost:8080/swagger-ui/index.html#/
