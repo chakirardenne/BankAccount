@@ -8,12 +8,14 @@ import com.exalt.bankaccount.domain.impl.AccountImpl;
 import com.exalt.bankaccount.domain.intf.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class CreateAccountService implements CreateAccountUseCase {
     private final AccountRepository accountRepository;
 
+    @Transactional
     @Override
     public CreateAccountResponse create(CreateAccountRequest createAccountRequest) {
         Account account = new AccountImpl(createAccountRequest.getId(),
