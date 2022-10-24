@@ -4,9 +4,7 @@ import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
 import com.exalt.bankaccount.domain.intf.Account;
 import com.exalt.bankaccount.domain.intf.Transaction;
 
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AccountImpl implements Account {
@@ -22,18 +20,21 @@ public class AccountImpl implements Account {
         this.transactions = new ArrayList<>();
     }
 
+    private void checkBalanceState(double amount) {
+        if(Double.sum(amount, balance) <= 0 )
+            throw new NegativeBalanceException("Can't withdraw from account, balance is negative");
+    }
+
     @Override
     public void deposit(double amount) {
+        checkBalanceState(amount);
         this.balance+=amount;
-        this.transactions.add(new TransactionImpl(id, TransactionType.DEPOSIT, amount, Date.from(Instant.now()), this.getBalance()));
     }
 
     @Override
     public void withdraw(double amount) throws NegativeBalanceException {
-        if(this.balance <= 0)
-            throw new NegativeBalanceException("Can't withdraw from account, balance is negative");
+        checkBalanceState(amount);
         this.balance-=amount;
-        this.transactions.add(new TransactionImpl(id, TransactionType.WITHDRAW, amount, Date.from(Instant.now()), this.getBalance()));
     }
 
     @Override
@@ -45,13 +46,18 @@ public class AccountImpl implements Account {
     public String getName() {
         return name;
     }
-
     @Override
     public List<Transaction> getTransactionHistory() {
         return transactions;
     }
 
+    @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public boolean addTransaction(Transaction transaction) {
+        return transactions.add(transaction);
     }
 }

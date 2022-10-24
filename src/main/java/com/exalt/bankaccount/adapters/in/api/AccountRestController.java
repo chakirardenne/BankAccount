@@ -26,16 +26,16 @@ public class AccountRestController {
         return createService.create(createAccountRequest);
     }
 
-    @PostMapping(value = "/deposit")
+    @PostMapping(value = "{id}/deposit")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deposit(@RequestBody DepositRequest depositRequest) {
-        depositService.deposit(depositRequest.getId(), depositRequest.getAmount());
+    public void deposit(@PathVariable("id") Long id, @RequestBody DepositRequest depositRequest) {
+        depositService.deposit(id, depositRequest.getAmount());
     }
 
-    @PostMapping(value = "/withdraw")
+    @PostMapping(value = "{id}/withdraw")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void withdraw(@RequestBody WithdrawRequest withdrawRequest) {
-        withdrawService.withdraw(withdrawRequest.getId(), withdrawRequest.getAmount());
+    public void withdraw(@PathVariable("id")Long id, @RequestBody WithdrawRequest withdrawRequest) {
+        withdrawService.withdraw(id, withdrawRequest.getAmount());
     }
 
     @GetMapping(value = "/{id}/history")

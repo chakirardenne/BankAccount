@@ -31,7 +31,6 @@ import static org.mockito.Mockito.*;
 class BankAccountServiceTest {
     @MockBean
     private AccountRepository accountRepository;
-
     @MockBean
     private HistoryUseCase historyService;
     @MockBean
@@ -59,7 +58,7 @@ class BankAccountServiceTest {
 
     @Test
     void shouldDepositOnAccountThenSaveIt() {
-        final Account account = new AccountImpl(1L, BALANCE_VALUE, "accountName");
+        final Account account = new AccountImpl(1L,BALANCE_VALUE, "accountName");
         when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
         depositService.deposit(1L, 10);
         verify(accountRepository).save(any(Account.class));
@@ -67,21 +66,21 @@ class BankAccountServiceTest {
 
     @Test
     void shouldWithDrawOnAccountThenSaveIt() throws NegativeBalanceException {
-        final Account account = new AccountImpl(1L, BALANCE_VALUE, "accountName");
+        final Account account = new AccountImpl(1L,BALANCE_VALUE, "accountName");
         when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
-        withdrawService.withdraw(account.getId(), 10);
+        withdrawService.withdraw(1L, 10);
         verify(accountRepository).save(any(Account.class));
     }
 
     @Test
     void shouldReturnHistoryForAccount() throws NegativeBalanceException {
-        final Account account = new AccountImpl(1L, BALANCE_VALUE, "accountName");
+        final Account account = new AccountImpl(1L,BALANCE_VALUE, "accountName");
         when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
-        when(accountRepository.getHistory(account)).thenReturn(account.getTransactionHistory());
-        historyService.getHistoryForAccount(account.getId());
+        when(accountRepository.getHistoryById(1L)).thenReturn(account.getTransactionHistory());
+        historyService.getHistoryForAccount(1L);
         depositService.deposit(1L, 200);
         withdrawService.withdraw(1L, 59);
-        List<Transaction> transactions = historyService.getHistoryForAccount(account.getId());
+        List<Transaction> transactions = historyService.getHistoryForAccount(1L);
         assertEquals(2, transactions.size());
     }
 }

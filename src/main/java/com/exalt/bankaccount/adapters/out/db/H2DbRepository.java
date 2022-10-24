@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Repository
@@ -18,9 +17,7 @@ public class H2DbRepository implements AccountRepository {
     private final SpringDataJpaRepository repository;
     @Override
     public Optional<Account> findById(Long id) {
-        AccountEntity account = repository.findById(id)
-                .orElseThrow(NoSuchElementException::new);
-        return Optional.of(AccountEntity.toDomain(account));
+        return repository.findById(id).map(AccountEntity::toDomain);
     }
     @Override
     public Account save(Account account){
@@ -28,9 +25,9 @@ public class H2DbRepository implements AccountRepository {
     }
 
     @Override
-    public List<Transaction> getHistory(Account account) {
-        return repository.findById(account.getId())
-                .orElseThrow(NoSuchElementException::new).getTransactions().stream()
+    public List<Transaction> getHistoryById(Long id) {
+        return repository.findById(id).map(AccountEntity::getTransactions).stream()
+                .flatMap(List::stream)
                 .map(TransactionEntity::toDomain)
                 .toList();
     }

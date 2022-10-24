@@ -2,12 +2,11 @@ package com.exalt.bankaccount.domain.intf;
 
 import com.exalt.bankaccount.domain.impl.TransactionType;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public interface Transaction {
     TransactionType getTransactionType();
     double getAmount();
-    Date getDate();
+    LocalDateTime getDate();
     double getBalance();
-    Long getId();
 }

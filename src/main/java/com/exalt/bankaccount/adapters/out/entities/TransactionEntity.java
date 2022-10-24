@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -25,12 +25,11 @@ public class TransactionEntity {
     private Long id;
     private String type;
     private double amount;
-    private Date date;
+    private LocalDateTime date;
     private double balance;
 
     public static Transaction toDomain(TransactionEntity transactionEntity) {
-        return new TransactionImpl(transactionEntity.getId(),
-                TransactionType.valueOf(transactionEntity.getType()),
+        return new TransactionImpl(TransactionType.valueOf(transactionEntity.getType()),
                 transactionEntity.getAmount(),
                 transactionEntity.getDate(),
                 transactionEntity.getBalance()
@@ -39,9 +38,8 @@ public class TransactionEntity {
 
     public static TransactionEntity toEntity(Transaction transaction) {
         return TransactionEntity.builder()
-                .id(transaction.getId())
                 .amount(transaction.getAmount())
-                .type(transaction.getTransactionType().getType())
+                .type(transaction.getTransactionType().name())
                 .date(transaction.getDate())
                 .balance(transaction.getBalance())
                 .build();
