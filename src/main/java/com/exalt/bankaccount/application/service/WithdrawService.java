@@ -24,7 +24,7 @@ public class WithdrawService implements WithdrawUseCase {
         Account account = accountRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
         account.withdraw(amount);
-        account.addTransaction(new TransactionImpl(TransactionType.DEPOSIT,
+        account.addTransaction(new TransactionImpl(TransactionType.WITHDRAW,
                 amount,
                 LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC),
                 account.getBalance()));
