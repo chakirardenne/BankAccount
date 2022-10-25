@@ -3,10 +3,12 @@ package com.exalt.bankaccount.domain.impl;
 import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
 import com.exalt.bankaccount.domain.intf.Account;
 import com.exalt.bankaccount.domain.intf.Transaction;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class AccountImpl implements Account {
     private final Long id;
     private double balance;
@@ -20,9 +22,16 @@ public class AccountImpl implements Account {
         this.transactions = new ArrayList<>();
     }
 
+    public AccountImpl(Long id, double balance, String name, List<Transaction> transactions) {
+        this.id = id;
+        this.balance = balance;
+        this.name = name;
+        this.transactions = transactions;
+    }
+
     private void checkBalanceState(double amount) {
-        if(Double.sum(amount, balance) <= 0 )
-            throw new NegativeBalanceException("Can't withdraw from account, balance is negative");
+        if(Double.sum(amount, balance) < 0 )
+            throw new NegativeBalanceException("Can't do this operation, balance can't be negative");
     }
 
     @Override
