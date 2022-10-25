@@ -17,6 +17,7 @@ import com.exalt.bankaccount.domain.intf.Transaction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -39,15 +40,18 @@ class BankAccountServiceTest {
     private WithdrawUseCase withdrawService;
     @MockBean
     private CreateAccountUseCase createService;
+    @MockBean
+    private ModelMapper modelMapper;
     static final double BALANCE_VALUE = 1000;
 
     @BeforeEach
     void setUp() {
         accountRepository = mock(AccountRepository.class);
+        modelMapper = mock(ModelMapper.class);
         historyService = new HistoryService(accountRepository);
         depositService = new DepositService(accountRepository);
         withdrawService = new WithdrawService(accountRepository);
-        createService = new CreateAccountService(accountRepository);
+        createService = new CreateAccountService(accountRepository, modelMapper);
     }
 
     @AfterEach
