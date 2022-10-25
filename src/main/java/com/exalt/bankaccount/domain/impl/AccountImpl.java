@@ -29,20 +29,22 @@ public class AccountImpl implements Account {
         this.transactions = transactions;
     }
 
-    private void checkBalanceState(double amount) {
-        if(Double.sum(amount, balance) < 0 )
-            throw new NegativeBalanceException("Can't do this operation, balance can't be negative");
+    private void checkAmountValue(double amount) {
+        if(amount < 0)
+            throw new IllegalArgumentException("Amount can't be negative");
     }
 
     @Override
     public void deposit(double amount) {
-        checkBalanceState(amount);
+        checkAmountValue(amount);
         this.balance+=amount;
     }
 
     @Override
     public void withdraw(double amount) throws NegativeBalanceException {
-        checkBalanceState(amount);
+        checkAmountValue(amount);
+        if(balance <= amount)
+            throw new NegativeBalanceException("Can't do this operation, balance can't be negative");
         this.balance-=amount;
     }
 
