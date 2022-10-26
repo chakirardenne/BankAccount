@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -24,7 +23,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(value = {NegativeBalanceException.class})
-    public ResponseEntity<Object> negativeBalanceException(AccountNotFoundException ex) {
+    public ResponseEntity<Object> negativeBalanceException(NegativeBalanceException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message", ex.getMessage());
@@ -32,7 +31,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(value = {NegativeAmountInOperationException.class})
-    public ResponseEntity<Object> negativeAmountInOperationException(AccountNotFoundException ex) {
+    public ResponseEntity<Object> negativeAmountInOperationException(NegativeAmountInOperationException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message", ex.getMessage());
