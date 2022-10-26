@@ -1,5 +1,6 @@
 package com.exalt.bankaccount.application.service;
 
+import com.exalt.bankaccount.application.exception.AccountNotFoundException;
 import com.exalt.bankaccount.application.ports.in.WithdrawUseCase;
 import com.exalt.bankaccount.application.ports.out.AccountRepository;
 import com.exalt.bankaccount.domain.impl.TransactionImpl;
@@ -22,7 +23,7 @@ public class WithdrawService implements WithdrawUseCase {
     @Transactional
     public void withdraw(Long id, double amount) {
         Account account = accountRepository.findById(id)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new AccountNotFoundException(id));
         account.withdraw(amount);
         account.addTransaction(new TransactionImpl(TransactionType.WITHDRAW,
                 amount,
