@@ -45,7 +45,7 @@ class AccountRestControllerTest {
         depositRequest.setId(1L);
         depositRequest.setAmount(100);
 
-        mvc.perform(post(BASE_URL + "deposit")
+        mvc.perform(post(BASE_URL + "1/deposit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(depositRequest)))
                 .andExpect(status().isNoContent());
@@ -57,7 +57,7 @@ class AccountRestControllerTest {
         withdrawRequest.setId(1L);
         withdrawRequest.setAmount(100);
 
-        mvc.perform(post(BASE_URL + "withdraw")
+        mvc.perform(post(BASE_URL + "1/withdraw")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(withdrawRequest)))
                 .andExpect(status().isNoContent());
@@ -77,12 +77,13 @@ class AccountRestControllerTest {
         createAccountRequest.setId(1L);
         createAccountRequest.setBalance(50.0);
         createAccountRequest.setName("account_test");
-        when(createService.create(createAccountRequest))
-                .thenReturn(CreateAccountResponse.builder()
-                .id(createAccountRequest.getId())
-                .balance(createAccountRequest.getBalance())
-                .name(createAccountRequest.getName())
-                .build());
+        CreateAccountResponse createAccountResponse = new CreateAccountResponse();
+        createAccountResponse.setBalance(createAccountRequest.getBalance());
+        createAccountResponse.setId(createAccountRequest.getId());
+        createAccountResponse.setName(createAccountRequest.getName());
+
+        when(createService.create(createAccountRequest)).thenReturn(createAccountResponse);
+
         mvc.perform(post(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createAccountRequest)))

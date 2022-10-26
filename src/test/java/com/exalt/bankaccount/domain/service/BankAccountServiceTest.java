@@ -1,6 +1,8 @@
 package com.exalt.bankaccount.domain.service;
 
 import com.exalt.bankaccount.adapters.in.api.AccountRestController;
+import com.exalt.bankaccount.adapters.in.dto.CreateAccountRequest;
+import com.exalt.bankaccount.adapters.in.dto.CreateAccountResponse;
 import com.exalt.bankaccount.application.ports.in.CreateAccountUseCase;
 import com.exalt.bankaccount.application.ports.in.DepositUseCase;
 import com.exalt.bankaccount.application.ports.in.HistoryUseCase;
@@ -86,5 +88,18 @@ class BankAccountServiceTest {
         withdrawService.withdraw(1L, 59);
         List<Transaction> transactions = historyService.getHistoryForAccount(1L);
         assertEquals(2, transactions.size());
+    }
+
+    @Test
+    void shouldCreateNewAccountAccount() {
+        final Account account = new AccountImpl(1L,BALANCE_VALUE, "accountName");
+        CreateAccountRequest createAccountRequest = new CreateAccountRequest();
+        createAccountRequest.setId(account.getId());
+        createAccountRequest.setBalance(account.getBalance());
+        createAccountRequest.setName(account.getName());
+
+        when(accountRepository.save(account)).thenReturn(account);
+        createService.create(createAccountRequest);
+        verify(accountRepository).save(any(Account.class));
     }
 }
