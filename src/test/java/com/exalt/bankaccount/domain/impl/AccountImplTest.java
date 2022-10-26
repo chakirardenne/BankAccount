@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AccountImplTest {
     AccountImpl account;
@@ -39,10 +41,21 @@ class AccountImplTest {
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = {1, 30, 600, 56, 765})
-    void withdrawFromNegativeAccount(double amount) {
-        account.withdraw(BALANCE_VALUE);
+    @ValueSource(doubles = {1001, 2000})
+    void withdrawFromAccountWithNegativeBalance(double amount) {
         assertThrows(NegativeBalanceException.class, () -> account.withdraw(amount));
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {-1000000, -200})
+    void depositNegativeAmountIntoAccount(double amount) {
+        assertThrows(IllegalArgumentException.class, () -> account.deposit(amount));
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {-1000000, -200})
+    void withdrawNegativeAmountIntoAccount(double amount) {
+        assertThrows(IllegalArgumentException.class, () -> account.withdraw(amount));
     }
 
     @Test
@@ -67,5 +80,14 @@ class AccountImplTest {
     @Test
     void getName() {
         assertEquals(ACCOUNT_NAME, account.getName());
+    }
+
+    @Test
+    void addTransaction() {
+        Transaction transaction = new TransactionImpl(TransactionType.DEPOSIT,
+                10,
+                LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC),
+                account.getBalance());
+        assertTrue(account.addTransaction(transaction));
     }
 }
