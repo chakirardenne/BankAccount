@@ -20,11 +20,9 @@ class AccountImplTest {
     AccountImpl account;
     static final double BALANCE_VALUE = 1000;
     static final String ACCOUNT_NAME = "Name";
-    static final Long ACCOUNT_ID = 1L;
-
     @BeforeEach
     void setUp() {
-        account = new AccountImpl(ACCOUNT_ID, BALANCE_VALUE, ACCOUNT_NAME);
+        account = new AccountImpl(BALANCE_VALUE, ACCOUNT_NAME);
     }
 
     @ParameterizedTest

@@ -37,12 +37,11 @@ class AccountRestControllerTest {
     private ObjectMapper objectMapper;
     @Autowired
     private MockMvc mvc;
-    private final String BASE_URL = "/accounts/";
+    private final String BASE_URL = "/account/";
 
     @Test
     void deposit() throws Exception {
         DepositRequest depositRequest = new DepositRequest();
-        depositRequest.setId(1L);
         depositRequest.setAmount(100);
 
         mvc.perform(post(BASE_URL + "1/deposit")
@@ -54,7 +53,6 @@ class AccountRestControllerTest {
     @Test
     void withdraw() throws Exception {
         WithdrawRequest withdrawRequest = new WithdrawRequest();
-        withdrawRequest.setId(1L);
         withdrawRequest.setAmount(100);
 
         mvc.perform(post(BASE_URL + "1/withdraw")
@@ -74,12 +72,11 @@ class AccountRestControllerTest {
     @Test
     void create() throws Exception {
         CreateAccountRequest createAccountRequest = new CreateAccountRequest();
-        createAccountRequest.setId(1L);
         createAccountRequest.setBalance(50.0);
         createAccountRequest.setName("account_test");
         CreateAccountResponse createAccountResponse = new CreateAccountResponse();
         createAccountResponse.setBalance(createAccountRequest.getBalance());
-        createAccountResponse.setId(createAccountRequest.getId());
+        createAccountResponse.setId(1L);
         createAccountResponse.setName(createAccountRequest.getName());
 
         when(createService.create(createAccountRequest)).thenReturn(createAccountResponse);
@@ -89,8 +86,8 @@ class AccountRestControllerTest {
                 .content(objectMapper.writeValueAsString(createAccountRequest)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(createAccountRequest.getId()))
-                .andExpect(jsonPath("$.balance").value(createAccountRequest.getBalance()))
-                .andExpect(jsonPath("$.name").value(createAccountRequest.getName()));
+                .andExpect(jsonPath("$.id").value(createAccountResponse.getId()))
+                .andExpect(jsonPath("$.balance").value(createAccountResponse.getBalance()))
+                .andExpect(jsonPath("$.name").value(createAccountResponse.getName()));
     }
 }
