@@ -4,6 +4,5 @@ import lombok.Data;
 
 @Data
 public class DepositRequest {
-    private Long id;
     private double amount;
 }
