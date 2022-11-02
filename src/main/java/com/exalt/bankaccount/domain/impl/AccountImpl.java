@@ -4,20 +4,18 @@ import com.exalt.bankaccount.domain.exception.NegativeAmountInOperationException
 import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
 import com.exalt.bankaccount.domain.intf.Account;
 import com.exalt.bankaccount.domain.intf.Transaction;
-import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 public class AccountImpl implements Account {
     private final Long id;
     private double balance;
     private final String name;
     private final List<Transaction> transactions;
 
-    public AccountImpl(Long id, double balance, String name) {
-        this.id = id;
+    public AccountImpl(double balance, String name) {
+        this.id = 0L;
         this.balance = balance;
         this.name = name;
         this.transactions = new ArrayList<>();
