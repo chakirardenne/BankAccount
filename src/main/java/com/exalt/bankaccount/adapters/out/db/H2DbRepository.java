@@ -8,6 +8,7 @@ import com.exalt.bankaccount.domain.intf.Account;
 import com.exalt.bankaccount.domain.intf.Transaction;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,15 +25,17 @@ public class H2DbRepository implements AccountRepository {
     }
     @Override
     public Account save(Account account){
-
-        AccountEntity accountEntity = repository.save(modelMapper.map(account, AccountEntity.class));
+        AccountEntity accountEntity = modelMapper.map(account, AccountEntity.class);
+        List<TransactionEntity> transactionEntities = modelMapper.map(account.getTransactionHistory(), new TypeToken<List<TransactionEntity>>() {}.getType());
+        accountEntity.setTransactions(transactionEntities);
+        accountEntity  = repository.save(accountEntity);
         return new AccountImpl(accountEntity.getId(),
                 accountEntity.getBalance(),
                 accountEntity.getName(),
                 accountEntity.getTransactions().stream()
                         .map(TransactionEntity::toDomain)
                         .toList()
-                );
+        );
     }
 
     @Override
