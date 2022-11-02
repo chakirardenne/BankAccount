@@ -11,8 +11,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-
 @Service
 @RequiredArgsConstructor
 public class CreateAccountService implements CreateAccountUseCase {
@@ -22,11 +20,9 @@ public class CreateAccountService implements CreateAccountUseCase {
     @Transactional
     @Override
     public CreateAccountResponse create(CreateAccountRequest createAccountRequest) {
-        Account account = new AccountImpl(createAccountRequest.getId(),
+        Account account = accountRepository.save(new AccountImpl(
                 createAccountRequest.getBalance(),
-                createAccountRequest.getName(),
-                new ArrayList<>());
-        accountRepository.save(account);
+                createAccountRequest.getName()));
         return modelMapper.map(account, CreateAccountResponse.class);
     }
 }
