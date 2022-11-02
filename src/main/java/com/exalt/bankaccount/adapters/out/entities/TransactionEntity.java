@@ -35,13 +35,4 @@ public class TransactionEntity {
                 transactionEntity.getBalance()
         );
     }
-
-    public static TransactionEntity toEntity(Transaction transaction) {
-        return TransactionEntity.builder()
-                .amount(transaction.getAmount())
-                .type(transaction.getTransactionType().name())
-                .date(transaction.getDate())
-                .balance(transaction.getBalance())
-                .build();
-    }
 }
