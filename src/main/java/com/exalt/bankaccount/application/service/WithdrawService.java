@@ -20,13 +20,10 @@ public class WithdrawService implements WithdrawUseCase {
     @Override
     @Transactional
     public void withdraw(Long id, double amount) {
-        Account account = accountPort.findById(id)
-                .orElseThrow(() -> new AccountNotFoundException(id));
+        Account account = accountPort.findById(id).orElseThrow(() -> new AccountNotFoundException(id));
         account.withdraw(amount);
-        account.addTransaction(new TransactionImpl(TransactionType.WITHDRAW,
-                amount,
-                LocalDateTime.now(ZoneOffset.UTC),
-                account.getBalance()));
+        account.addTransaction(new TransactionImpl(TransactionType.WITHDRAW,amount,
+                LocalDateTime.now(ZoneOffset.UTC),account.getBalance()));
         accountPort.save(account);
     }
 }
