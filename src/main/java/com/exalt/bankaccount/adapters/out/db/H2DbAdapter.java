@@ -9,12 +9,10 @@ import com.exalt.bankaccount.domain.intf.Transaction;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+
 @RequiredArgsConstructor
 public class H2DbAdapter implements AccountPort {
     private final SpringDataJpaRepository repository;
