@@ -62,4 +62,27 @@ public class AccountImpl implements Account {
     public boolean addTransaction(Transaction transaction) {
         return transactions.add(transaction);
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AccountImpl account)) return false;
+
+        if (Double.compare(account.balance, balance) != 0) return false;
+        if (!id.equals(account.id)) return false;
+        return name.equals(account.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id.hashCode();
+        temp = Double.doubleToLongBits(balance);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + name.hashCode();
+        return result;
+    }
+
 }
