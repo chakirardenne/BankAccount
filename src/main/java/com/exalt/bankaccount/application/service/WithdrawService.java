@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -26,7 +25,7 @@ public class WithdrawService implements WithdrawUseCase {
         account.withdraw(amount);
         account.addTransaction(new TransactionImpl(TransactionType.WITHDRAW,
                 amount,
-                LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC),
+                LocalDateTime.now(ZoneOffset.UTC),
                 account.getBalance()));
         accountPort.save(account);
     }

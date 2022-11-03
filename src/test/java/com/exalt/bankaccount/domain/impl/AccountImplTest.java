@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -85,7 +84,7 @@ class AccountImplTest {
     void addTransaction() {
         Transaction transaction = new TransactionImpl(TransactionType.DEPOSIT,
                 10,
-                LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC),
+                LocalDateTime.now(ZoneOffset.UTC),
                 account.getBalance());
         assertTrue(account.addTransaction(transaction));
     }

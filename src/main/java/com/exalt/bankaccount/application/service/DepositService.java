@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -26,7 +25,7 @@ public class DepositService implements DepositUseCase {
         account.deposit(amount);
         account.addTransaction(new TransactionImpl(TransactionType.DEPOSIT,
                 amount,
-                LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC),
+                LocalDateTime.now(ZoneOffset.UTC),
                 account.getBalance()));
         accountPort.save(account);
     }
