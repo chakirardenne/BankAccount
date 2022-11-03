@@ -14,8 +14,6 @@ repositories {
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
-    withJavadocJar()
-    withSourcesJar()
 }
 
 dependencies {
@@ -27,7 +25,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'com.h2database:h2'
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
-    implementation 'org.modelmapper:modelmapper:3.1.0'
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 }
