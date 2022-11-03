@@ -84,9 +84,7 @@ class AccountImplTest {
     @Test
     void addTransaction() {
         Transaction transaction = new TransactionImpl(TransactionType.DEPOSIT,
-                10,
-                LocalDateTime.now(ZoneOffset.UTC),
-                account.getBalance());
+                10, LocalDateTime.now(ZoneOffset.UTC), account.getBalance());
         assertTrue(account.addTransaction(transaction));
     }
 }
