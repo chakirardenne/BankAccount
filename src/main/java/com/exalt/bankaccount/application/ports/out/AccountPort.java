@@ -6,7 +6,7 @@ import com.exalt.bankaccount.domain.intf.Transaction;
 import java.util.List;
 import java.util.Optional;
 
-public interface AccountRepository {
+public interface AccountPort {
     Optional<Account> findById(Long id);
     Account save(Account account);
     List<Transaction> getHistoryById(Long id);

@@ -2,7 +2,7 @@ package com.exalt.bankaccount.adapters.out.db;
 
 import com.exalt.bankaccount.adapters.out.entities.AccountEntity;
 import com.exalt.bankaccount.adapters.out.entities.TransactionEntity;
-import com.exalt.bankaccount.application.ports.out.AccountRepository;
+import com.exalt.bankaccount.application.ports.out.AccountPort;
 import com.exalt.bankaccount.domain.impl.AccountImpl;
 import com.exalt.bankaccount.domain.intf.Account;
 import com.exalt.bankaccount.domain.intf.Transaction;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class H2DbRepository implements AccountRepository {
+public class H2DbAdapter implements AccountPort {
     private final SpringDataJpaRepository repository;
     private final ModelMapper modelMapper;
     @Override

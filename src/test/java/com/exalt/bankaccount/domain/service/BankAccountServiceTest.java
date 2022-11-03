@@ -6,7 +6,7 @@ import com.exalt.bankaccount.application.ports.in.CreateAccountUseCase;
 import com.exalt.bankaccount.application.ports.in.DepositUseCase;
 import com.exalt.bankaccount.application.ports.in.HistoryUseCase;
 import com.exalt.bankaccount.application.ports.in.WithdrawUseCase;
-import com.exalt.bankaccount.application.ports.out.AccountRepository;
+import com.exalt.bankaccount.application.ports.out.AccountPort;
 import com.exalt.bankaccount.application.service.CreateAccountService;
 import com.exalt.bankaccount.application.service.DepositService;
 import com.exalt.bankaccount.application.service.HistoryService;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 @WebMvcTest(controllers = AccountRestController.class)
 class BankAccountServiceTest {
     @MockBean
-    private AccountRepository accountRepository;
+    private AccountPort accountPort;
     @MockBean
     private HistoryUseCase historyService;
     @MockBean
@@ -45,41 +45,41 @@ class BankAccountServiceTest {
 
     @BeforeEach
     void setUp() {
-        accountRepository = mock(AccountRepository.class);
+        accountPort = mock(AccountPort.class);
         modelMapper = mock(ModelMapper.class);
-        historyService = new HistoryService(accountRepository);
-        depositService = new DepositService(accountRepository);
-        withdrawService = new WithdrawService(accountRepository);
-        createService = new CreateAccountService(accountRepository, modelMapper);
+        historyService = new HistoryService(accountPort);
+        depositService = new DepositService(accountPort);
+        withdrawService = new WithdrawService(accountPort);
+        createService = new CreateAccountService(accountPort, modelMapper);
     }
 
     @AfterEach
     void tearDown() {
-        accountRepository = null;
+        accountPort = null;
         historyService = null;
     }
 
     @Test
     void shouldDepositOnAccountThenSaveIt() {
         final Account account = new AccountImpl(BALANCE_VALUE, "accountName");
-        when(accountRepository.findById(account.getId())).thenReturn(Optional.of(account));
+        when(accountPort.findById(account.getId())).thenReturn(Optional.of(account));
         depositService.deposit(account.getId(), 10);
-        verify(accountRepository).save(any(Account.class));
+        verify(accountPort).save(any(Account.class));
     }
 
     @Test
     void shouldWithDrawOnAccountThenSaveIt() throws NegativeBalanceException {
         final Account account = new AccountImpl(BALANCE_VALUE, "accountName");
-        when(accountRepository.findById(account.getId())).thenReturn(Optional.of(account));
+        when(accountPort.findById(account.getId())).thenReturn(Optional.of(account));
         withdrawService.withdraw(account.getId(), 10);
-        verify(accountRepository).save(any(Account.class));
+        verify(accountPort).save(any(Account.class));
     }
 
     @Test
     void shouldReturnHistoryForAccount() throws NegativeBalanceException {
         final Account account = new AccountImpl(BALANCE_VALUE, "accountName");
-        when(accountRepository.findById(account.getId())).thenReturn(Optional.of(account));
-        when(accountRepository.getHistoryById(account.getId())).thenReturn(account.getTransactionHistory());
+        when(accountPort.findById(account.getId())).thenReturn(Optional.of(account));
+        when(accountPort.getHistoryById(account.getId())).thenReturn(account.getTransactionHistory());
         depositService.deposit(account.getId(), 200);
         withdrawService.withdraw(account.getId(), 59);
         assertEquals(account.getTransactionHistory(), historyService.getHistoryForAccount(account.getId()));
@@ -91,8 +91,8 @@ class BankAccountServiceTest {
         CreateAccountRequest createAccountRequest = new CreateAccountRequest();
         createAccountRequest.setBalance(account.getBalance());
         createAccountRequest.setName(account.getName());
-        when(accountRepository.save(account)).thenReturn(account);
+        when(accountPort.save(account)).thenReturn(account);
         createService.create(createAccountRequest);
-        verify(accountRepository).save(any(Account.class));
+        verify(accountPort).save(any(Account.class));
     }
 }
