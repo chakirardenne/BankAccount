@@ -32,7 +32,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(value = {HttpMessageNotReadableException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Object handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+    public Object handleHttpMessageNotReadable() {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message", "Malformed JSON request");
