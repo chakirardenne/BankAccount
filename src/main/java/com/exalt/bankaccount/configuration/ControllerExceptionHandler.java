@@ -1,7 +1,7 @@
 package com.exalt.bankaccount.configuration;
 
 import com.exalt.bankaccount.application.exception.AccountNotFoundException;
-import com.exalt.bankaccount.domain.exception.NegativeAmountInOperationException;
+import com.exalt.bankaccount.domain.exception.IncorrectAmountValueInOperationException;
 import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -20,7 +20,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(value = {
             AccountNotFoundException.class,
             NegativeBalanceException.class,
-            NegativeAmountInOperationException.class
+            IncorrectAmountValueInOperationException.class
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Object badRequestBusinessException(RuntimeException ex) {

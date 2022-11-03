@@ -1,6 +1,6 @@
 package com.exalt.bankaccount.domain.impl;
 
-import com.exalt.bankaccount.domain.exception.NegativeAmountInOperationException;
+import com.exalt.bankaccount.domain.exception.IncorrectAmountValueInOperationException;
 import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
 import com.exalt.bankaccount.domain.intf.Account;
 import com.exalt.bankaccount.domain.intf.Transaction;
@@ -29,8 +29,8 @@ public class AccountImpl implements Account {
     }
 
     private void checkAmountValue(double amount) {
-        if(amount < 0)
-            throw new NegativeAmountInOperationException();
+        if(amount <= 0)
+            throw new IncorrectAmountValueInOperationException("Amount must be a strictly positive number");
     }
 
     @Override

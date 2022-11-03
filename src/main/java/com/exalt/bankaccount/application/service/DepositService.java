@@ -20,13 +20,10 @@ public class DepositService implements DepositUseCase {
     @Override
     @Transactional
     public void deposit(Long id, double amount) {
-        Account account = accountPort.findById(id)
-                .orElseThrow(() -> new AccountNotFoundException(id));
+        Account account = accountPort.findById(id).orElseThrow(() -> new AccountNotFoundException(id));
         account.deposit(amount);
-        account.addTransaction(new TransactionImpl(TransactionType.DEPOSIT,
-                amount,
-                LocalDateTime.now(ZoneOffset.UTC),
-                account.getBalance()));
+        account.addTransaction(new TransactionImpl(TransactionType.DEPOSIT, amount,
+                LocalDateTime.now(ZoneOffset.UTC), account.getBalance()));
         accountPort.save(account);
     }
 }

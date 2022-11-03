@@ -1,6 +1,6 @@
 package com.exalt.bankaccount.domain.impl;
 
-import com.exalt.bankaccount.domain.exception.NegativeAmountInOperationException;
+import com.exalt.bankaccount.domain.exception.IncorrectAmountValueInOperationException;
 import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
 import com.exalt.bankaccount.domain.intf.Transaction;
 import org.junit.jupiter.api.AfterEach;
@@ -47,13 +47,13 @@ class AccountImplTest {
     @ParameterizedTest
     @ValueSource(doubles = {-1000000, -200})
     void depositNegativeAmountIntoAccount(double amount) {
-        assertThrows(NegativeAmountInOperationException.class, () -> account.deposit(amount));
+        assertThrows(IncorrectAmountValueInOperationException.class, () -> account.deposit(amount));
     }
 
     @ParameterizedTest
     @ValueSource(doubles = {-1000000, -200})
     void withdrawNegativeAmountIntoAccount(double amount) {
-        assertThrows(NegativeAmountInOperationException.class, () -> account.withdraw(amount));
+        assertThrows(IncorrectAmountValueInOperationException.class, () -> account.withdraw(amount));
     }
 
     @Test
