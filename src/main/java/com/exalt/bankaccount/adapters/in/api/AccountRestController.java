@@ -1,6 +1,7 @@
 package com.exalt.bankaccount.adapters.in.api;
 
 import com.exalt.bankaccount.adapters.in.dto.*;
+import com.exalt.bankaccount.application.converter.MapperTool;
 import com.exalt.bankaccount.application.ports.in.CreateAccountUseCase;
 import com.exalt.bankaccount.application.ports.in.DepositUseCase;
 import com.exalt.bankaccount.application.ports.in.HistoryUseCase;
@@ -19,6 +20,7 @@ public class AccountRestController {
     private final WithdrawUseCase withdrawService;
     private final DepositUseCase depositService;
     private final CreateAccountUseCase createService;
+    private final MapperTool mapper;
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
@@ -42,7 +44,7 @@ public class AccountRestController {
     @ResponseStatus(HttpStatus.OK)
     public List<TransactionResponse> getHistory(@PathVariable("id") Long id) {
         return  historyService.getHistoryForAccount(id).stream()
-                .map(TransactionResponse::of)
+                .map(mapper::transactionToTransactionResponse)
                 .toList();
     }
 }

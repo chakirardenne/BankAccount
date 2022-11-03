@@ -5,6 +5,7 @@ import com.exalt.bankaccount.adapters.in.dto.CreateAccountRequest;
 import com.exalt.bankaccount.adapters.in.dto.CreateAccountResponse;
 import com.exalt.bankaccount.adapters.in.dto.DepositRequest;
 import com.exalt.bankaccount.adapters.in.dto.WithdrawRequest;
+import com.exalt.bankaccount.application.converter.MapperTool;
 import com.exalt.bankaccount.application.ports.in.CreateAccountUseCase;
 import com.exalt.bankaccount.application.ports.in.DepositUseCase;
 import com.exalt.bankaccount.application.ports.in.HistoryUseCase;
@@ -33,6 +34,8 @@ class AccountRestControllerTest {
     private WithdrawUseCase withdrawService;
     @MockBean
     private CreateAccountUseCase createService;
+    @MockBean
+    private MapperTool mapperTool;
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired

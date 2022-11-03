@@ -18,7 +18,7 @@ public class TransactionImpl implements Transaction {
     }
 
     @Override
-    public TransactionType getTransactionType() {
+    public TransactionType getType() {
         return type;
     }
 

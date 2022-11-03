@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +22,7 @@ class AccountImplTest {
     static final String ACCOUNT_NAME = "Name";
     @BeforeEach
     void setUp() {
-        account = new AccountImpl(BALANCE_VALUE, ACCOUNT_NAME);
+        account = new AccountImpl(null,BALANCE_VALUE, ACCOUNT_NAME, new ArrayList<>());
     }
 
     @ParameterizedTest

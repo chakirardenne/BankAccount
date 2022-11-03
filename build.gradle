@@ -28,7 +28,8 @@ dependencies {
     implementation 'com.h2database:h2'
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
     implementation 'org.modelmapper:modelmapper:3.1.0'
-
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 }
 
 test{

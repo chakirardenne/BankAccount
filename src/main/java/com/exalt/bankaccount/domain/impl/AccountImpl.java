@@ -5,7 +5,6 @@ import com.exalt.bankaccount.domain.exception.NegativeBalanceException;
 import com.exalt.bankaccount.domain.intf.Account;
 import com.exalt.bankaccount.domain.intf.Transaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AccountImpl implements Account {
@@ -13,13 +12,6 @@ public class AccountImpl implements Account {
     private double balance;
     private final String name;
     private final List<Transaction> transactions;
-
-    public AccountImpl(double balance, String name) {
-        this.id = null;
-        this.balance = balance;
-        this.name = name;
-        this.transactions = new ArrayList<>();
-    }
 
     public AccountImpl(Long id, double balance, String name, List<Transaction> transactions) {
         this.id = id;

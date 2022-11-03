@@ -2,6 +2,7 @@ package com.exalt.bankaccount.domain.service;
 
 import com.exalt.bankaccount.adapters.in.api.AccountRestController;
 import com.exalt.bankaccount.adapters.in.dto.CreateAccountRequest;
+import com.exalt.bankaccount.application.converter.MapperTool;
 import com.exalt.bankaccount.application.ports.in.CreateAccountUseCase;
 import com.exalt.bankaccount.application.ports.in.DepositUseCase;
 import com.exalt.bankaccount.application.ports.in.HistoryUseCase;
@@ -17,10 +18,10 @@ import com.exalt.bankaccount.domain.intf.Account;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,17 +41,17 @@ class BankAccountServiceTest {
     @MockBean
     private CreateAccountUseCase createService;
     @MockBean
-    private ModelMapper modelMapper;
+    private MapperTool mapperTool;
     static final double BALANCE_VALUE = 1000;
 
     @BeforeEach
     void setUp() {
         accountPort = mock(AccountPort.class);
-        modelMapper = mock(ModelMapper.class);
+        mapperTool = mock(MapperTool.class);
         historyService = new HistoryService(accountPort);
         depositService = new DepositService(accountPort);
         withdrawService = new WithdrawService(accountPort);
-        createService = new CreateAccountService(accountPort, modelMapper);
+        createService = new CreateAccountService(accountPort, mapperTool);
     }
 
     @AfterEach
@@ -61,7 +62,7 @@ class BankAccountServiceTest {
 
     @Test
     void shouldDepositOnAccountThenSaveIt() {
-        final Account account = new AccountImpl(BALANCE_VALUE, "accountName");
+        final Account account = new AccountImpl(null,BALANCE_VALUE, "accountName", new ArrayList<>());
         when(accountPort.findById(account.getId())).thenReturn(Optional.of(account));
         depositService.deposit(account.getId(), 10);
         verify(accountPort).save(any(Account.class));
@@ -69,7 +70,7 @@ class BankAccountServiceTest {
 
     @Test
     void shouldWithDrawOnAccountThenSaveIt() throws NegativeBalanceException {
-        final Account account = new AccountImpl(BALANCE_VALUE, "accountName");
+        final Account account = new AccountImpl(null,BALANCE_VALUE, "accountName", new ArrayList<>());
         when(accountPort.findById(account.getId())).thenReturn(Optional.of(account));
         withdrawService.withdraw(account.getId(), 10);
         verify(accountPort).save(any(Account.class));
@@ -77,7 +78,7 @@ class BankAccountServiceTest {
 
     @Test
     void shouldReturnHistoryForAccount() throws NegativeBalanceException {
-        final Account account = new AccountImpl(BALANCE_VALUE, "accountName");
+        final Account account = new AccountImpl(null,BALANCE_VALUE, "accountName", new ArrayList<>());
         when(accountPort.findById(account.getId())).thenReturn(Optional.of(account));
         when(accountPort.getHistoryById(account.getId())).thenReturn(account.getTransactionHistory());
         depositService.deposit(account.getId(), 200);
@@ -87,7 +88,7 @@ class BankAccountServiceTest {
 
     @Test
     void shouldCreateNewAccountAccount() {
-        final Account account = new AccountImpl(BALANCE_VALUE, "accountName");
+        final Account account = new AccountImpl(null,BALANCE_VALUE, "accountName", new ArrayList<>());
         CreateAccountRequest createAccountRequest = new CreateAccountRequest();
         createAccountRequest.setBalance(account.getBalance());
         createAccountRequest.setName(account.getName());
