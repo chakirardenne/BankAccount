@@ -23,5 +23,8 @@ public interface MapperTool {
     TransactionResponse transactionToTransactionResponse(Transaction transaction);
     List<TransactionEntity> listTransactionToListTransactionEntity(List<Transaction> transactions);
     TransactionImpl transactionEntityToTransaction(TransactionEntity transactionEntity);
+    @Mapping(target = "id", ignore = true)
+    TransactionEntity transactionToTransactionEntity(Transaction transaction);
+    @Mapping(target = "transactionHistory", source = "transactions")
     AccountImpl accountEntityToAccount(AccountEntity accountEntity);
 }
