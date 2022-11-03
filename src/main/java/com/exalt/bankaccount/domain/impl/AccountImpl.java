@@ -15,7 +15,7 @@ public class AccountImpl implements Account {
     private final List<Transaction> transactions;
 
     public AccountImpl(double balance, String name) {
-        this.id = 0L;
+        this.id = null;
         this.balance = balance;
         this.name = name;
         this.transactions = new ArrayList<>();
@@ -42,7 +42,7 @@ public class AccountImpl implements Account {
     @Override
     public void withdraw(double amount) throws NegativeBalanceException {
         checkAmountValue(amount);
-        if(balance <= amount)
+        if(balance < amount)
             throw new NegativeBalanceException("Can't do this operation, balance can't be negative");
         this.balance-=amount;
     }
